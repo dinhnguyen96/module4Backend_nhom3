@@ -1,0 +1,107 @@
+package com.example.casestudymodule4.model;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+@Entity
+public class Account {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String gmail;
+    private String password;
+    private Boolean status = false;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @OneToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+    public Account(Long id, String gmail, String password, Boolean status, Set<Role> roles, User user, Company company) {
+        this.id = id;
+        this.gmail = gmail;
+        this.password = password;
+        this.status = status;
+        this.roles = roles;
+        this.user = user;
+        this.company = company;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getGmail() {
+        return gmail;
+    }
+
+    public void setGmail(String gmail) {
+        this.gmail = gmail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public List<GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
+    }
+
+
+
+    public Account() {
+    }
+}
