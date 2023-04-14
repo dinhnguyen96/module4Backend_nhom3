@@ -1,6 +1,5 @@
 package com.example.casestudymodule4.repository;
 
-import com.example.casestudymodule4.model.Account;
 import com.example.casestudymodule4.model.Job;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

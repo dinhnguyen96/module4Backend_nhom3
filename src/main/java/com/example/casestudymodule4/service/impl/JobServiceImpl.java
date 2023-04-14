@@ -13,9 +13,10 @@ public class JobServiceImpl implements IJobService {
     @Autowired
     private IJobRepository jobRepository;
 
+
     @Override
     public Page<Job> findAll(String name, Pageable pageable) {
-        return jobRepository.findAllByNameContaining(name, pageable);
+        return jobRepository.findAllByNameContaining(name,pageable);
     }
 
     @Override
