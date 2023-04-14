@@ -23,9 +23,12 @@ src/main/resources/application.properties
 *.iws
 *.iml
 *.ipr
+
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+
+
 
 ### NetBeans ###
 /nbproject/private/
@@ -33,6 +36,7 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
+src/main/resources/application.properties
 
 ### VS Code ###
 .vscode/
