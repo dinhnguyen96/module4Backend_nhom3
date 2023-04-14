@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IJobRepository extends JpaRepository<Job,Long> {
-    Page<Job> findAllByNameContaining(String name, Pageable pageable);
+    Page<Job> findAllByJobNameContaining(String jobName, Pageable pageable);
 }

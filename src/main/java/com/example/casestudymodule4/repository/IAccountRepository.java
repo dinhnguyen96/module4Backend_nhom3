@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IAccountRepository extends JpaRepository<Account,Long> {
-    Page<Account> findAllByNameContaining(String name, Pageable pageable);
+    Page<Account> findAllByGmailContaining(String gmail, Pageable pageable);
 }
