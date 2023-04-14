@@ -33,6 +33,9 @@ public class Job {
         this.programingLanguage = programingLanguage;
     }
 
+    public Job() {
+    }
+
     public Boolean getStatus() {
         return status;
     }
