@@ -10,11 +10,22 @@ public class City {
     private String name;
     @ManyToOne
     private Company company;
+    @ManyToOne
+    private Job job;
 
-    public City(Long id, String name, Company company) {
+    public City(Long id, String name, Company company, Job job) {
         this.id = id;
         this.name = name;
         this.company = company;
+        this.job = job;
+    }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
     }
 
     public Company getCompany() {

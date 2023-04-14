@@ -13,5 +13,4 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/homes")
 public class HomeController {
 
-
 }
