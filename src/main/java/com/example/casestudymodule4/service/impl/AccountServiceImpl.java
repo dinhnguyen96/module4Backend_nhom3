@@ -14,8 +14,8 @@ public class AccountServiceImpl implements IAccountService {
     private IAccountRepository accountRepository;
 
     @Override
-    public Page<Account> findAll(String name, Pageable pageable) {
-        return accountRepository.findAllByNameContaining(name, pageable);
+    public Page<Account> findAll(String gmail, Pageable pageable) {
+        return accountRepository.findAllByGmailContaining(gmail, pageable);
     }
 
     @Override
