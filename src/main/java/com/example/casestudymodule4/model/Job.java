@@ -8,19 +8,48 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String jobName;
+    private String name;
     private Double salary;
     private Date postDate;
     private Date expriteDate;
     private Integer experience;
-
+    private String content;
+    private Boolean status=false;
     @ManyToOne
     private Qualification qualification;
     @ManyToOne
     private ProgramingLanguage programingLanguage;
 
+    public Job(Long id, String name, Double salary, Date postDate, Date expriteDate, Integer experience, String content, Boolean status, Qualification qualification, ProgramingLanguage programingLanguage) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+        this.postDate = postDate;
+        this.expriteDate = expriteDate;
+        this.experience = experience;
+        this.content = content;
+        this.status = status;
+        this.qualification = qualification;
+        this.programingLanguage = programingLanguage;
+    }
+
     public Job() {
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -29,14 +58,6 @@ public class Job {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getJobName() {
-        return jobName;
-    }
-
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
     }
 
     public Double getSalary() {
@@ -69,6 +90,14 @@ public class Job {
 
     public void setExperience(Integer experience) {
         this.experience = experience;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Qualification getQualification() {
