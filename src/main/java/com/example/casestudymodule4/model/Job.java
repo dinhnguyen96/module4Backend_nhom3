@@ -14,12 +14,13 @@ public class Job {
     private Date expriteDate;
     private Integer experience;
     private String content;
+    private Boolean status=false;
     @ManyToOne
     private Qualification qualification;
     @ManyToOne
     private ProgramingLanguage programingLanguage;
 
-    public Job(Long id, String name, Double salary, Date postDate, Date expriteDate, Integer experience, String content, Qualification qualification, ProgramingLanguage programingLanguage) {
+    public Job(Long id, String name, Double salary, Date postDate, Date expriteDate, Integer experience, String content, Boolean status, Qualification qualification, ProgramingLanguage programingLanguage) {
         this.id = id;
         this.name = name;
         this.salary = salary;
@@ -27,8 +28,17 @@ public class Job {
         this.expriteDate = expriteDate;
         this.experience = experience;
         this.content = content;
+        this.status = status;
         this.qualification = qualification;
         this.programingLanguage = programingLanguage;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public String getName() {
