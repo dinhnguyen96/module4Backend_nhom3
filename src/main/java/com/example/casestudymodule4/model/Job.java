@@ -2,6 +2,8 @@ package com.example.casestudymodule4.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Job {
@@ -14,13 +16,15 @@ public class Job {
     private Date expriteDate;
     private Integer experience;
     private String content;
+    @OneToMany(mappedBy = "city")
+    private Set<City> cities = new HashSet<>();
     private Boolean status=false;
     @ManyToOne
     private Qualification qualification;
     @ManyToOne
     private ProgramingLanguage programingLanguage;
 
-    public Job(Long id, String name, Double salary, Date postDate, Date expriteDate, Integer experience, String content, Boolean status, Qualification qualification, ProgramingLanguage programingLanguage) {
+    public Job(Long id, String name, Double salary, Date postDate, Date expriteDate, Integer experience, String content, Set<City> cities, Boolean status, Qualification qualification, ProgramingLanguage programingLanguage) {
         this.id = id;
         this.name = name;
         this.salary = salary;
@@ -28,9 +32,18 @@ public class Job {
         this.expriteDate = expriteDate;
         this.experience = experience;
         this.content = content;
+        this.cities = cities;
         this.status = status;
         this.qualification = qualification;
         this.programingLanguage = programingLanguage;
+    }
+
+    public Set<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(Set<City> cities) {
+        this.cities = cities;
     }
 
     public Job() {
