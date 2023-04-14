@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface IJobRepository extends JpaRepository<Job,Long> {
     Page<Job> findAllByNameContaining(String name, Pageable pageable);
+
 }
