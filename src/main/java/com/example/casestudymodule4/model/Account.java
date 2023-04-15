@@ -9,14 +9,20 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "account")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String gmail;
+    @Column(nullable = false)
     private String password;
     private Boolean status = false;
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "accounts_role",
+               joinColumns = {@JoinColumn(name = "account_id")},
+               inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles;
 
     @OneToOne
@@ -34,6 +40,11 @@ public class Account {
         this.roles = roles;
         this.user = user;
         this.company = company;
+    }
+
+    public Account(String gmail, String password) {
+        this.gmail = gmail;
+        this.password = password;
     }
 
     public Long getId() {

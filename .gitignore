@@ -17,6 +17,7 @@ src/main/resources/application.properties
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+src/main/resources/application.properties
 
 ### IntelliJ IDEA ###
 .idea
@@ -40,7 +41,7 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
-src/main/resources/application.properties
+/src/main/resources/application.properties
 
 ### VS Code ###
 .vscode/
