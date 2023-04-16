@@ -35,6 +35,11 @@ public class CompanyServiceImpl implements ICompanyService {
     }
 
     @Override
+    public Iterable<Company> findAll() {
+        return companyRepository.findAll();
+    }
+
+    @Override
     public Integer companyCount()
     {
         return companyRepository.companyCount();
