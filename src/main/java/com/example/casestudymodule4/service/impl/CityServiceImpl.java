@@ -32,4 +32,9 @@ public class CityServiceImpl implements ICityService {
     public void delete(Long id) {
         cityRepository.deleteById(id);
     }
+
+    @Override
+    public Integer branchCount() {
+        return cityRepository.branchCount();
+    }
 }
