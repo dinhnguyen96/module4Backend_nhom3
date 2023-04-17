@@ -37,9 +37,9 @@ public class JobServiceImpl implements IJobService {
 
 
     @Override
-    public Iterable<Job> findJobsByQLOrLCOrPLanguage(Long programmingLanguageId, String qualificationId, String cityId)
+    public Page<Job> findJobsByQLOrLCOrPLanguage(Long programmingLanguageId, String qualificationId, String cityId,Pageable pageable)
     {
-        return jobRepository.findJobsByQLOrLCOrPLanguage(programmingLanguageId, qualificationId, cityId);
+        return jobRepository.findJobsByQLOrLCOrPLanguage(programmingLanguageId, qualificationId, cityId,pageable);
 
     }
 }

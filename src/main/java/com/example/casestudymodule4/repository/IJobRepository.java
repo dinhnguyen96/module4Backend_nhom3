@@ -16,8 +16,8 @@ public interface IJobRepository extends JpaRepository<Job,Long>
     Page<Job> findAllByNameContaining(String name, Pageable pageable);
 
     @Query("select job from City city join city.job job where job.programingLanguage.id = :programmingLanguageId or job.qualification.name like concat('%', :qualificationName, '%') or city.name like concat('%',:cityName,'%') ")
-    Iterable<Job> findJobsByQLOrLCOrPLanguage(@Param("programmingLanguageId") Long programmingLanguageId,
+    Page<Job> findJobsByQLOrLCOrPLanguage(@Param("programmingLanguageId") Long programmingLanguageId,
                                           @Param("qualificationName") String qualificationName,
-                                          @Param("cityName") String cityName);
+                                          @Param("cityName") String cityName,Pageable pageable);
 
 }
