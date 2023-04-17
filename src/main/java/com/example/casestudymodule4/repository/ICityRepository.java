@@ -15,4 +15,6 @@ public interface ICityRepository extends JpaRepository<City,Long> {
     Integer branchCount();
 
 
+    @Query("select distinct(city.name) from City city")
+    Iterable<City> findAllCities();
 }

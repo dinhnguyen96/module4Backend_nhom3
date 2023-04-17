@@ -34,6 +34,11 @@ public class CityServiceImpl implements ICityService {
     }
 
     @Override
+    public Iterable<City> findAllCities() {
+        return cityRepository.findAllCities();
+    }
+
+    @Override
     public Integer branchCount() {
         return cityRepository.branchCount();
     }

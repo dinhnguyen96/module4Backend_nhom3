@@ -5,5 +5,6 @@ import com.example.casestudymodule4.service.core.ICoreService;
 
 public interface ICityService extends ICoreService<City>
 {
+    Iterable<City> findAllCities();
     Integer branchCount();
 }
