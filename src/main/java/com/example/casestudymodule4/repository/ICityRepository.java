@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -14,7 +15,7 @@ public interface ICityRepository extends JpaRepository<City,Long> {
     @Query("select count(distinct(city.name)) from City city")
     Integer branchCount();
 
+    @Query("select distinct(city.name) from City city where lower(city.name) like concat('%',:cityName, '%') or upper(city.name) like concat('%',:cityName, '%') ")
+    Iterable<String> findAllCitiesBySearchName(@Param("cityName") String name);
 
-    @Query("select distinct(city.name) from City city")
-    Iterable<City> findAllCities();
 }

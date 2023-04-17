@@ -33,9 +33,10 @@ public class CityServiceImpl implements ICityService {
         cityRepository.deleteById(id);
     }
 
+
     @Override
-    public Iterable<City> findAllCities() {
-        return cityRepository.findAllCities();
+    public Iterable<String> findAllCitiesBySearchName(String cityName) {
+        return cityRepository.findAllCitiesBySearchName(cityName);
     }
 
     @Override

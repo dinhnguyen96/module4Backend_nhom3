@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -59,20 +60,6 @@ public class HomeController
             return new ResponseEntity<>(companies, HttpStatus.OK);
         }
     }
-    @GetMapping("/cities")
-    public ResponseEntity<List<City>> cityList()
-    {
-        List<City> cities = (List<City>) cityService.findAllCities();
-
-        if (cities.size() == 0)
-        {
-            return new ResponseEntity<>(cities, HttpStatus.NO_CONTENT);
-        }
-        else
-        {
-            return new ResponseEntity<>(cities, HttpStatus.OK);
-        }
-    }
     @GetMapping("/programmingLanguage")
     public ResponseEntity<List<ProgramingLanguage>> programmingLanguageList()
     {
@@ -87,4 +74,19 @@ public class HomeController
             return new ResponseEntity<>(programingLanguages, HttpStatus.OK);
         }
     }
+    @GetMapping("/citiesSearchByName")
+    public ResponseEntity<List<String>> cityListByNameSearch(@RequestParam("searchLocation") String cityName)
+    {
+        List<String> cities = (List<String>) cityService.findAllCitiesBySearchName(cityName);
+
+        if (cities.size() == 0)
+        {
+            return new ResponseEntity<>(cities, HttpStatus.NO_CONTENT);
+        }
+        else
+        {
+            return new ResponseEntity<>(cities, HttpStatus.OK);
+        }
+    }
+
 }
