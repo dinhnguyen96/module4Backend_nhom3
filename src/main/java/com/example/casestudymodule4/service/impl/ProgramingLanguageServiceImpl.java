@@ -32,4 +32,9 @@ public class ProgramingLanguageServiceImpl implements IProgramingLanguageService
     public void delete(Long id) {
         programingLanguageRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<ProgramingLanguage> findAll() {
+        return programingLanguageRepository.findAll();
+    }
 }

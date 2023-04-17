@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class JobServiceImpl implements IJobService {
     @Autowired
@@ -31,5 +33,13 @@ public class JobServiceImpl implements IJobService {
     @Override
     public void delete(Long id) {
         jobRepository.deleteById(id);
+    }
+
+
+    @Override
+    public Iterable<Job> findJobsByQLOrLCOrPLanguage(Long programmingLanguageId, String qualificationId, String cityId)
+    {
+        return jobRepository.findJobsByQLOrLCOrPLanguage(programmingLanguageId, qualificationId, cityId);
+
     }
 }

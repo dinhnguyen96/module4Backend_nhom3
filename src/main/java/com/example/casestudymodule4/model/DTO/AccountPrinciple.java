@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class AccountPrinciple implements UserDetails {
     @Serial
-    private static final long serialVersionUTD = 1L;
+    private static final long serialVersionUID = 1L;
     private Long id;
     private String gmail;
     private String password;

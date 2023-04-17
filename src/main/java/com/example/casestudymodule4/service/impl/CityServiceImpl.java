@@ -32,4 +32,15 @@ public class CityServiceImpl implements ICityService {
     public void delete(Long id) {
         cityRepository.deleteById(id);
     }
+
+
+    @Override
+    public Iterable<String> findAllCitiesBySearchName(String cityName) {
+        return cityRepository.findAllCitiesBySearchName(cityName);
+    }
+
+    @Override
+    public Integer branchCount() {
+        return cityRepository.branchCount();
+    }
 }

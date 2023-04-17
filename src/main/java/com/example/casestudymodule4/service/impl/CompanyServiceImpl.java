@@ -33,4 +33,15 @@ public class CompanyServiceImpl implements ICompanyService {
     public void delete(Long id) {
         companyRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<Company> findAll() {
+        return companyRepository.findAll();
+    }
+
+    @Override
+    public Integer companyCount()
+    {
+        return companyRepository.companyCount();
+    }
 }
