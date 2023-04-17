@@ -14,13 +14,15 @@ public class Job {
     private Date expriteDate;
     private Integer experience;
     private String content;
+
+    private String uploadCV;
     private Boolean status=false;
     @ManyToOne
     private Qualification qualification;
     @ManyToOne
     private ProgramingLanguage programingLanguage;
 
-    public Job(Long id, String name, Double salary, Date postDate, Date expriteDate, Integer experience, String content, Boolean status, Qualification qualification, ProgramingLanguage programingLanguage) {
+    public Job(Long id, String name, Double salary, Date postDate, Date expriteDate, Integer experience, String content, Boolean status, Qualification qualification, ProgramingLanguage programingLanguage, String uploadCV) {
         this.id = id;
         this.name = name;
         this.salary = salary;
@@ -31,9 +33,18 @@ public class Job {
         this.status = status;
         this.qualification = qualification;
         this.programingLanguage = programingLanguage;
+        this.uploadCV = uploadCV;
     }
 
     public Job() {
+    }
+
+    public String getUploadCV() {
+        return uploadCV;
+    }
+
+    public void setUploadCV(String uploadCV) {
+        this.uploadCV = uploadCV;
     }
 
     public Boolean getStatus() {

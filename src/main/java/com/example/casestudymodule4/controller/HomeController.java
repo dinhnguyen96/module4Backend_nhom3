@@ -1,21 +1,15 @@
 package com.example.casestudymodule4.controller;
 
-import com.example.casestudymodule4.model.City;
 import com.example.casestudymodule4.model.Company;
 import com.example.casestudymodule4.model.ProgramingLanguage;
 import com.example.casestudymodule4.service.ext.ICityService;
 import com.example.casestudymodule4.service.ext.ICompanyService;
 import com.example.casestudymodule4.service.ext.IProgramingLanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
