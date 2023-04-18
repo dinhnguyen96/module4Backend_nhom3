@@ -6,6 +6,8 @@ import com.example.casestudymodule4.service.ext.ICityService;
 import com.example.casestudymodule4.service.ext.ICompanyService;
 import com.example.casestudymodule4.service.ext.IProgramingLanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,11 +43,11 @@ public class HomeController
     }
 
     @GetMapping("/companies")
-    public ResponseEntity<List<Company>> companyList()
+    public ResponseEntity<Page<Company>> companyList(@RequestParam(value = "page", required = false) int page)
     {
-        List<Company> companies = (List<Company>) companyService.findAll();
+        Page<Company> companies = companyService.findAllCompany(PageRequest.of(page, 6));
 
-        if (companies.size() == 0)
+        if (companies.getTotalPages() == 0)
         {
             return new ResponseEntity<>(companies, HttpStatus.NO_CONTENT);
         }

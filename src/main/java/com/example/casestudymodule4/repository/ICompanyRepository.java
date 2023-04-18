@@ -13,6 +13,9 @@ public interface ICompanyRepository extends JpaRepository<Company,Long>
     Page<Company> findAllByNameContaining(String name, Pageable pageable);
 
 
+    @Query("select company from Company company")
+    Page<Company> findAllCompany(Pageable pageable);
+
     @Query("select count(distinct(company.name)) from Company  company")
     Integer companyCount();
 }

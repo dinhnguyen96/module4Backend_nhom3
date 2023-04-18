@@ -34,9 +34,10 @@ public class CompanyServiceImpl implements ICompanyService {
         companyRepository.deleteById(id);
     }
 
+
     @Override
-    public Iterable<Company> findAll() {
-        return companyRepository.findAll();
+    public Page<Company> findAllCompany(Pageable pageable) {
+        return companyRepository.findAllCompany(pageable);
     }
 
     @Override

@@ -9,6 +9,6 @@ public interface ICompanyService extends ICoreService<Company>
 {
 
 
-    Iterable<Company> findAll();
+    Page<Company> findAllCompany(Pageable pageable);
     Integer companyCount();
 }
