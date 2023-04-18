@@ -42,4 +42,5 @@ public class JobServiceImpl implements IJobService {
         return jobRepository.findJobsByQLOrLCOrPLanguage(programmingLanguageId, qualificationId, cityId,pageable);
 
     }
+
 }

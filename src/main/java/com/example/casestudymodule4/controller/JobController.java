@@ -4,6 +4,7 @@ import com.example.casestudymodule4.model.Job;
 import com.example.casestudymodule4.service.ext.IJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -20,12 +21,12 @@ public class JobController {
     @Autowired
     private IJobService jobService;
 
-    @PostMapping("/searchingJob")
-    public ResponseEntity<Page<Job>> searchJobBy(@PageableDefault Pageable pageable, @RequestParam(value = "searchLocationByJob", required = false) String cityName,
-                                                 @RequestParam(value = "programmingLanguageJob", required = false) Long programmingLanguageId,
+    @GetMapping("/searchingJob")
+    public ResponseEntity<Page<Job>> searchJob( @RequestParam(defaultValue = "0", value = "page") int page, @RequestParam(value = "searchLocationByJob", required = false) String cityName,
+                                                 @RequestParam(value = "programmingLanguageJob", required = false) Long programmingLanguage,
                                                  @RequestParam(value = "qualificationName", required = false) String qualificationName) {
         Page<Job> jobs;
-        jobs= jobService.findJobsByQLOrLCOrPLanguage(programmingLanguageId, qualificationName, cityName,pageable);
+        jobs= jobService.findJobsByQLOrLCOrPLanguage(programmingLanguage, qualificationName, cityName,PageRequest.of(page,6));
 
         if (jobs.getTotalPages() == 0) {
             return new ResponseEntity<>(jobs, HttpStatus.NO_CONTENT);
@@ -34,7 +35,7 @@ public class JobController {
         }
     }
     @GetMapping("/listJob")
-    public ResponseEntity<Page<Job>> listJob(@PageableDefault Pageable pageable, Optional<String >name){
+    public ResponseEntity<Page<Job>> listJob(@PageableDefault Pageable pageable,Optional<String >name){
         Page<Job>jobs;
         if (name.isPresent()){
             jobs=jobService.findAll(name.get(),pageable);

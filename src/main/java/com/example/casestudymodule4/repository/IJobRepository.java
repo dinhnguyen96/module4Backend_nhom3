@@ -8,14 +8,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface IJobRepository extends JpaRepository<Job,Long>
 {
     Page<Job> findAllByNameContaining(String name, Pageable pageable);
 
-    @Query("select job from City city join city.job job where job.programingLanguage.id = :programmingLanguageId or job.qualification.name like concat('%', :qualificationName, '%') or city.name like concat('%',:cityName,'%') ")
+    @Query("select job from City city inner join city.job job where"+" "+
+            "(:qualificationName IS NULL OR job.qualification.name LIKE %:qualificationName%) and"+" "+
+            " (:cityName IS NULL OR city.name LIKE %:cityName%) and"+" "+
+            "(:programmingLanguageId IS NULL OR job.programingLanguage.id = :programmingLanguageId)")
     Page<Job> findJobsByQLOrLCOrPLanguage(@Param("programmingLanguageId") Long programmingLanguageId,
                                           @Param("qualificationName") String qualificationName,
                                           @Param("cityName") String cityName,Pageable pageable);
