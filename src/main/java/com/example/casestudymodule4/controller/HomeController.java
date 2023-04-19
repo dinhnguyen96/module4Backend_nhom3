@@ -19,8 +19,7 @@ import java.util.List;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/all/homes")
-public class HomeController
-{
+public class HomeController {
     @Autowired
     private ICityService cityService;
 
@@ -37,55 +36,44 @@ public class HomeController
 
 
     @GetMapping("/cityCount")
-    public ResponseEntity<Integer> branchCount()
-    {
+    public ResponseEntity<Integer> branchCount() {
         return new ResponseEntity<>(cityService.branchCount(), HttpStatus.OK);
     }
+
     @GetMapping("/companyCount")
-    public ResponseEntity<Integer> cityCount()
-    {
+    public ResponseEntity<Integer> cityCount() {
         return new ResponseEntity<>(companyService.companyCount(), HttpStatus.OK);
     }
 
     @GetMapping("/companies")
-    public ResponseEntity<Page<Company>> companyList(@RequestParam(value = "page", required = false) int page)
-    {
+    public ResponseEntity<Page<Company>> companyList(@RequestParam(value = "page", required = false) int page) {
         Page<Company> companies = companyService.findAllCompany(PageRequest.of(page, 6));
 
-        if (companies.getTotalPages() == 0)
-        {
+        if (companies.getTotalPages() == 0) {
             return new ResponseEntity<>(companies, HttpStatus.NO_CONTENT);
-        }
-        else
-        {
+        } else {
             return new ResponseEntity<>(companies, HttpStatus.OK);
         }
     }
+
     @GetMapping("/programmingLanguage")
-    public ResponseEntity<List<ProgramingLanguage>> programmingLanguageList()
-    {
+    public ResponseEntity<List<ProgramingLanguage>> programmingLanguageList() {
         List<ProgramingLanguage> programingLanguages = (List<ProgramingLanguage>) programingLanguageService.findAll();
 
-        if (programingLanguages.size() == 0)
-        {
+        if (programingLanguages.size() == 0) {
             return new ResponseEntity<>(programingLanguages, HttpStatus.NO_CONTENT);
-        }
-        else
-        {
+        } else {
             return new ResponseEntity<>(programingLanguages, HttpStatus.OK);
         }
     }
+
     @GetMapping("/citiesSearchByName")
-    public ResponseEntity<List<String>> cityListByNameSearch(@RequestParam("searchLocation") String cityName)
-    {
+    public ResponseEntity<List<String>> cityListByNameSearch(@RequestParam("searchLocation") String cityName) {
         List<String> cities = (List<String>) cityService.findAllCitiesBySearchName(cityName);
 
-        if (cities.size() == 0)
-        {
+        if (cities.size() == 0) {
             return new ResponseEntity<>(cities, HttpStatus.NO_CONTENT);
-        }
-        else
-        {
+        } else {
             return new ResponseEntity<>(cities, HttpStatus.OK);
         }
     }
@@ -98,18 +86,20 @@ public class HomeController
                                                @RequestParam(value = "programmingLanguageJob", required = false) Long programmingLanguage,
                                                @RequestParam(value = "qualificationName", required = false) String qualificationName) {
         Page<Job> jobs;
-        jobs= jobService.findJobsByQLOrLCOrPLanguage(programmingLanguage, qualificationName, cityName,PageRequest.of(page,6));
+        jobs = jobService.findJobsByQLOrLCOrPLanguage(programmingLanguage, qualificationName, cityName, PageRequest.of(page, 6));
 
         if (jobs.getTotalPages() == 0) {
             return new ResponseEntity<>(jobs, HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(jobs, HttpStatus.OK);
         }
-    }@GetMapping("/detailCompany/{id}")
-    public ResponseEntity<Company>getOne(@PathVariable Long id){
-        Company company=companyService.findOne(id);
-        return new ResponseEntity<>(company,HttpStatus.OK);
-}
+    }
+
+    @GetMapping("/detailCompany/{id}")
+    public ResponseEntity<Company> getOne(@PathVariable Long id) {
+        Company company = companyService.findOne(id);
+        return new ResponseEntity<>(company, HttpStatus.OK);
+    }
 
 
 //    @GetMapping("/searchingJob")

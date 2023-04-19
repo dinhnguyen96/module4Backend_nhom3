@@ -200,7 +200,6 @@ public class JobController {
     @Autowired
     private IJobService jobService;
 
-
     @GetMapping("/listJob")
     public ResponseEntity<Page<Job>> listJob(@PageableDefault Pageable pageable,Optional<String >name){
         Page<Job>jobs;
@@ -227,5 +226,18 @@ public class JobController {
         Job job=jobService.findOne(id);
         jobService.save(job);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/searchingJobUser")
+    public ResponseEntity<Page<Job>> searchJob1(@RequestParam(defaultValue = "0", value = "page") int page, @RequestParam(value = "searchLocationByJob", required = false) String cityName,
+                                               @RequestParam(value = "programmingLanguageJob", required = false) Long programmingLanguage,
+                                               @RequestParam(value = "qualificationName", required = false) String qualificationName) {
+        Page<Job> jobs;
+        jobs = jobService.findJobsByQLOrLCOrPLanguage(programmingLanguage, qualificationName, cityName, PageRequest.of(page, 6));
+
+        if (jobs.getTotalPages() == 0) {
+            return new ResponseEntity<>(jobs, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(jobs, HttpStatus.OK);
+        }
     }
 }

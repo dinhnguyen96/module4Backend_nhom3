@@ -85,5 +85,4 @@ public class CompanyController {
         return new ResponseEntity<>(company,HttpStatus.OK);
     }
 
-
 }
