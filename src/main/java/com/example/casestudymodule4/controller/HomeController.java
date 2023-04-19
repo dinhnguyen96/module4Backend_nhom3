@@ -32,6 +32,9 @@ public class HomeController
     @Autowired
     private IProgramingLanguageService programingLanguageService;
 
+    @Autowired
+    private IJobService jobService;
+
 
     @GetMapping("/cityCount")
     public ResponseEntity<Integer> branchCount()
@@ -86,8 +89,9 @@ public class HomeController
             return new ResponseEntity<>(cities, HttpStatus.OK);
         }
     }
-    @Autowired
-    private IJobService jobService;
+
+//    @Autowired
+//    private IJobService jobService;
 
     @GetMapping("/searchingJob")
     public ResponseEntity<Page<Job>> searchJob(@RequestParam(defaultValue = "0", value = "page") int page, @RequestParam(value = "searchLocationByJob", required = false) String cityName,
@@ -101,5 +105,24 @@ public class HomeController
         } else {
             return new ResponseEntity<>(jobs, HttpStatus.OK);
         }
-    }
+    }@GetMapping("/detailCompany/{id}")
+    public ResponseEntity<Company>getOne(@PathVariable Long id){
+        Company company=companyService.findOne(id);
+        return new ResponseEntity<>(company,HttpStatus.OK);
+}
+
+
+//    @GetMapping("/searchingJob")
+//    public ResponseEntity<Page<Job>> searchJob(@RequestParam(defaultValue = "0", value = "page") int page, @RequestParam(value = "searchLocationByJob", required = false) String cityName,
+//                                               @RequestParam(value = "programmingLanguageJob", required = false) Long programmingLanguage,
+//                                               @RequestParam(value = "qualificationName", required = false) String qualificationName) {
+//        Page<Job> jobs;
+//        jobs= jobService.findJobsByQLOrLCOrPLanguage(programmingLanguage, qualificationName, cityName,PageRequest.of(page,6));
+//
+//        if (jobs.getTotalPages() == 0) {
+//            return new ResponseEntity<>(jobs, HttpStatus.NO_CONTENT);
+//        } else {
+//            return new ResponseEntity<>(jobs, HttpStatus.OK);
+//        }
+//    }
 }

@@ -60,6 +60,7 @@ public class CompanyController {
         companyService.save(company1);
         return new ResponseEntity<>(company1,HttpStatus.OK);
     }
+
     @PostMapping(value = "/upload")
     public ResponseEntity<Void> createUpload(@RequestPart(value = "file", required = false) MultipartFile file,
                                              @RequestPart("company") Company company) {
@@ -77,4 +78,12 @@ public class CompanyController {
         companyService.save(company);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/detailCompany/{id}")
+    public ResponseEntity<Company>showDetail(@PathVariable Long id){
+        Company company=companyService.findOne(id);
+        return new ResponseEntity<>(company,HttpStatus.OK);
+    }
+
+
 }
