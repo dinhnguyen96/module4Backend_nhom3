@@ -54,11 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().ignoringAntMatchers("/**");
         httpSecurity.httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint());
         httpSecurity.authorizeRequests()
-                .antMatchers("/api/login", "/api/signup").permitAll()
+                .antMatchers("/api/login", "/api/signup", "/all").permitAll()
                 .and().authorizeRequests().antMatchers("/api/admin/**").hasAnyRole("ADMIN")
-                .and().authorizeRequests().antMatchers("/api/user/**").hasAnyRole("USER")
-                .and().authorizeRequests().antMatchers("/api/company/**").hasAnyRole("COMPANY")
-                .and().authorizeRequests().antMatchers("/api/all/**").hasAnyRole("COMPANY", "USER")
+                .and().authorizeRequests().antMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
+                .and().authorizeRequests().antMatchers("/api/company/**").hasAnyRole("COMPANY", "ADMIN")
                 .and().csrf().disable();
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());

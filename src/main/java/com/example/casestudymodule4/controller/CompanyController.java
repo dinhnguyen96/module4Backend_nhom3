@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/homes/company")
+@RequestMapping("/api/company")
 public class CompanyController {
     @Autowired
    private ICompanyService companyService;

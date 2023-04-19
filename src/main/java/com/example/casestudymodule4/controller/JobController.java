@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/homes/jobs")
+@RequestMapping("/api/user")
 public class JobController {
     @Autowired
     private IJobService jobService;
