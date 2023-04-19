@@ -1,15 +1,22 @@
 package com.example.casestudymodule4.controller;
 
 import com.example.casestudymodule4.model.Account;
+import com.example.casestudymodule4.model.Company;
 import com.example.casestudymodule4.model.DTO.RoleName;
 import com.example.casestudymodule4.model.DTO.request.SignupForm;
 import com.example.casestudymodule4.model.DTO.response.JwtResponse;
 import com.example.casestudymodule4.model.DTO.response.ResponseMessage;
 import com.example.casestudymodule4.model.Role;
+import com.example.casestudymodule4.model.User;
 import com.example.casestudymodule4.service.JwtService;
 import com.example.casestudymodule4.service.ext.IAccountService;
+import com.example.casestudymodule4.service.ext.ICompanyService;
 import com.example.casestudymodule4.service.ext.IRoleService;
+import com.example.casestudymodule4.service.ext.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,6 +51,11 @@ public class LoginController {
     private HttpServletRequest request;
     @Autowired
     private HttpServletResponse response;
+
+    @Autowired
+    private IUserService userService;
+    @Autowired
+    private ICompanyService companyService;
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Account account){
         Authentication authentication = authenticationManager.authenticate(
@@ -54,7 +66,7 @@ public class LoginController {
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Account account1 = accountService.findByGmail(account.getGmail()).get();
-        return ResponseEntity.ok(new JwtResponse(account1.getId(), jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(account1.getId(),jwt, userDetails.getUsername(), account1.getRoleName(), userDetails.getAuthorities()));
     }
     @PostMapping("/signup")
     public ResponseEntity<?> register(@RequestBody SignupForm signupForm){
@@ -69,10 +81,16 @@ public class LoginController {
                 case "ROLE_USER" -> {
                     Role userRole = roleService.findByName(String.valueOf(RoleName.ROLE_USER));
                     roles.add(userRole);
+                    User user = new User(signupForm.getGmail());
+                    userService.save(user);
+                    account.setUser(user);
                 }
                 case "ROLE_COMPANY" ->{
                     Role companyRole = roleService.findByName(String.valueOf(RoleName.ROLE_COMPANY));
+                    Company company = new Company(signupForm.getGmail());
+                    companyService.save(company);
                 roles.add(companyRole);
+                account.setCompany(company);
                 }
 //                case "ROLE_ADMIN" -> {
 //                    Role adminRole = roleService.findByName(String.valueOf(RoleName.ROLE_ADMIN));
@@ -109,5 +127,13 @@ public class LoginController {
     @GetMapping("/company")
     public ResponseEntity<String> get(){
         return new ResponseEntity<>("A nguyen", HttpStatus.OK);
+    }
+    @GetMapping("/listRole")
+    public ResponseEntity<Iterable<Role>> listRoles(){
+        return new ResponseEntity<>(roleService.findAllRole(), HttpStatus.OK);
+    }
+    @GetMapping("/user/viewRole/{id}")
+    public ResponseEntity<Role> viewRole(@PathVariable Long id){
+        return new ResponseEntity<>(roleService.findOne(id), HttpStatus.OK);
     }
 }

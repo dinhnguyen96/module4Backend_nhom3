@@ -1,5 +1,6 @@
 package com.example.casestudymodule4.model;
 
+import com.example.casestudymodule4.model.DTO.RoleName;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -112,7 +113,14 @@ public class Account {
     }
 
 
-
+    public List<Role> getRoleName(){
+        List<Role> roleList = new ArrayList<>();
+        for (Role role : roles) {
+            role.getName();
+            roleList.add(role);
+        }
+        return roleList;
+    }
     public Account() {
     }
 }
