@@ -1,9 +1,11 @@
 package com.example.casestudymodule4.controller;
 
 import com.example.casestudymodule4.model.Company;
+import com.example.casestudymodule4.model.Job;
 import com.example.casestudymodule4.model.ProgramingLanguage;
 import com.example.casestudymodule4.service.ext.ICityService;
 import com.example.casestudymodule4.service.ext.ICompanyService;
+import com.example.casestudymodule4.service.ext.IJobService;
 import com.example.casestudymodule4.service.ext.IProgramingLanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,7 +18,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/homes")
+@RequestMapping("/all/homes")
 public class HomeController
 {
     @Autowired
@@ -84,5 +86,20 @@ public class HomeController
             return new ResponseEntity<>(cities, HttpStatus.OK);
         }
     }
+    @Autowired
+    private IJobService jobService;
 
+    @GetMapping("/searchingJob")
+    public ResponseEntity<Page<Job>> searchJob(@RequestParam(defaultValue = "0", value = "page") int page, @RequestParam(value = "searchLocationByJob", required = false) String cityName,
+                                               @RequestParam(value = "programmingLanguageJob", required = false) Long programmingLanguage,
+                                               @RequestParam(value = "qualificationName", required = false) String qualificationName) {
+        Page<Job> jobs;
+        jobs= jobService.findJobsByQLOrLCOrPLanguage(programmingLanguage, qualificationName, cityName,PageRequest.of(page,6));
+
+        if (jobs.getTotalPages() == 0) {
+            return new ResponseEntity<>(jobs, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(jobs, HttpStatus.OK);
+        }
+    }
 }
