@@ -101,6 +101,10 @@ public class HomeController
         } else {
             return new ResponseEntity<>(jobs, HttpStatus.OK);
         }
-    }
+    }@GetMapping("/detailCompany/{id}")
+    public ResponseEntity<Company>getOne(@PathVariable Long id){
+        Company company=companyService.findOne(id);
+        return new ResponseEntity<>(company,HttpStatus.OK);
+}
 
 }
