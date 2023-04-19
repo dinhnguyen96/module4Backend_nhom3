@@ -50,5 +50,12 @@ public class CompanyController {
         companyService.save(company1);
         return new ResponseEntity<>(company1,HttpStatus.OK);
     }
+    @GetMapping("/detailCompany/{id}")
+    public ResponseEntity<Company>showDetail(@PathVariable Long id){
+        Company company=companyService.findOne(id);
+        return new ResponseEntity<>(company,HttpStatus.OK);
+    }
+
+
 
 }
