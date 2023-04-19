@@ -21,7 +21,7 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public Role findOne(Long id) {
-        return null;
+        return iRoleRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -37,5 +37,10 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public Role findByName(String name) {
         return iRoleRepository.findByName(name);
+    }
+
+    @Override
+    public Iterable<Role> findAllRole() {
+        return iRoleRepository.findAll();
     }
 }

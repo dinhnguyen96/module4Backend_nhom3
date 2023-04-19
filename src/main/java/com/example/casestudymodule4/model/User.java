@@ -27,6 +27,10 @@ public class User {
         this.status = status;
     }
 
+    public User(String gmail) {
+        this.gmail = gmail;
+    }
+
     public Boolean getStatus() {
         return status;
     }

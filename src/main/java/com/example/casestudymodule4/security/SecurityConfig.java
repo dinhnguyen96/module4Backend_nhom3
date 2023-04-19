@@ -58,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().antMatchers("/api/admin/**").hasAnyRole("ADMIN")
                 .and().authorizeRequests().antMatchers("/api/user/**").hasAnyRole("USER")
                 .and().authorizeRequests().antMatchers("/api/company/**").hasAnyRole("COMPANY")
+                .and().authorizeRequests().antMatchers("/api/all/**").hasAnyRole("COMPANY", "USER")
                 .and().csrf().disable();
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
