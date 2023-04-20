@@ -1,9 +1,6 @@
 package com.example.casestudymodule4.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Qualification {
@@ -18,6 +15,14 @@ public class Qualification {
     }
 
     public Qualification() {
+    }
+
+    public Qualification(Long id) {
+        this.id = id;
+    }
+
+    public Qualification(String name) {
+        this.name = name;
     }
 
     public Long getId() {

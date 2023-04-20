@@ -1,9 +1,6 @@
 package com.example.casestudymodule4.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class ProgramingLanguage {
@@ -14,6 +11,14 @@ public class ProgramingLanguage {
 
     public ProgramingLanguage(Long id, String name) {
         this.id = id;
+        this.name = name;
+    }
+
+    public ProgramingLanguage(Long id) {
+        this.id = id;
+    }
+
+    public ProgramingLanguage(String name) {
         this.name = name;
     }
 

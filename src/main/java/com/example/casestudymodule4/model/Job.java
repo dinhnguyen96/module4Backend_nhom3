@@ -10,8 +10,8 @@ public class Job {
     private Long id;
     private String name;
     private Double salary;
-    private Date postDate;
-    private Date expriteDate;
+    private String postDate;
+    private String expriteDate;
     private Integer experience;
     private String content;
 
@@ -22,7 +22,11 @@ public class Job {
     @ManyToOne
     private ProgramingLanguage programingLanguage;
 
-    public Job(Long id, String name, Double salary, Date postDate, Date expriteDate, Integer experience, String content, Boolean status, Qualification qualification, ProgramingLanguage programingLanguage, String uploadCV) {
+
+    public Job() {
+    }
+
+    public Job(Long id, String name, Double salary, String postDate, String expriteDate, Integer experience, String content, String uploadCV, Boolean status, Qualification qualification, ProgramingLanguage programingLanguage) {
         this.id = id;
         this.name = name;
         this.salary = salary;
@@ -30,13 +34,49 @@ public class Job {
         this.expriteDate = expriteDate;
         this.experience = experience;
         this.content = content;
+        this.uploadCV = uploadCV;
         this.status = status;
         this.qualification = qualification;
         this.programingLanguage = programingLanguage;
+    }
+
+    public Job(Long id, String name, Double salary, String postDate, String expriteDate, Integer experience, String content, String uploadCV) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+        this.postDate = postDate;
+        this.expriteDate = expriteDate;
+        this.experience = experience;
+        this.content = content;
         this.uploadCV = uploadCV;
     }
 
-    public Job() {
+    public Job(String name, Double salary, String postDate, String expriteDate, Integer experience, String content, String uploadCV, Qualification qualification, ProgramingLanguage programingLanguage) {
+        this.name = name;
+        this.salary = salary;
+        this.postDate = postDate;
+        this.expriteDate = expriteDate;
+        this.experience = experience;
+        this.content = content;
+        this.uploadCV = uploadCV;
+        this.qualification = qualification;
+        this.programingLanguage = programingLanguage;
+    }
+
+    public String getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
+    }
+
+    public String getExpriteDate() {
+        return expriteDate;
+    }
+
+    public void setExpriteDate(String expriteDate) {
+        this.expriteDate = expriteDate;
     }
 
     public String getUploadCV() {
@@ -79,21 +119,6 @@ public class Job {
         this.salary = salary;
     }
 
-    public Date getPostDate() {
-        return postDate;
-    }
-
-    public void setPostDate(Date postDate) {
-        this.postDate = postDate;
-    }
-
-    public Date getExpriteDate() {
-        return expriteDate;
-    }
-
-    public void setExpriteDate(Date expriteDate) {
-        this.expriteDate = expriteDate;
-    }
 
     public Integer getExperience() {
         return experience;

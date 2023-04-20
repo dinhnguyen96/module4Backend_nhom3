@@ -182,14 +182,22 @@ package com.example.casestudymodule4.controller;
 import com.example.casestudymodule4.model.Job;
 import com.example.casestudymodule4.service.ext.IJobService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -197,18 +205,23 @@ import java.util.Optional;
 @CrossOrigin("*")
 @RequestMapping("/api/user")
 public class JobController {
+    @Value("${upload.path}")
+    private String linkCv;
+
+    @Value("${display.path}")
+    private String displayLink1;
     @Autowired
     private IJobService jobService;
 
     @GetMapping("/listJob")
-    public ResponseEntity<Page<Job>> listJob(@PageableDefault Pageable pageable,Optional<String >name){
-        Page<Job>jobs;
-        if (name.isPresent()){
-            jobs=jobService.findAll(name.get(),pageable);
-        }else {
-            jobs=jobService.findAll("",pageable);
+    public ResponseEntity<Page<Job>> listJob(@PageableDefault Pageable pageable, Optional<String> name) {
+        Page<Job> jobs;
+        if (name.isPresent()) {
+            jobs = jobService.findAll(name.get(), pageable);
+        } else {
+            jobs = jobService.findAll("", pageable);
         }
-        return new ResponseEntity<>(jobs,HttpStatus.OK);
+        return new ResponseEntity<>(jobs, HttpStatus.OK);
     }
 
     @PostMapping("/createJob")
@@ -216,21 +229,24 @@ public class JobController {
         jobService.save(job);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @DeleteMapping ("/delete/{id}")
-    public ResponseEntity<Void>deleteJob(@PathVariable(value = "id") Long id){
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteJob(@PathVariable(value = "id") Long id) {
         jobService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PutMapping("/update/{id}")
-    public ResponseEntity<Void>updateJob(@PathVariable(value = "id") Long id){
-        Job job=jobService.findOne(id);
+    public ResponseEntity<Void> updateJob(@PathVariable(value = "id") Long id) {
+        Job job = jobService.findOne(id);
         jobService.save(job);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @GetMapping("/searchingJobUser")
     public ResponseEntity<Page<Job>> searchJob1(@RequestParam(defaultValue = "0", value = "page") int page, @RequestParam(value = "searchLocationByJob", required = false) String cityName,
-                                               @RequestParam(value = "programmingLanguageJob", required = false) Long programmingLanguage,
-                                               @RequestParam(value = "qualificationName", required = false) String qualificationName) {
+                                                @RequestParam(value = "programmingLanguageJob", required = false) Long programmingLanguage,
+                                                @RequestParam(value = "qualificationName", required = false) String qualificationName) {
         Page<Job> jobs;
         jobs = jobService.findJobsByQLOrLCOrPLanguage(programmingLanguage, qualificationName, cityName, PageRequest.of(page, 6));
 
@@ -240,4 +256,36 @@ public class JobController {
             return new ResponseEntity<>(jobs, HttpStatus.OK);
         }
     }
+
+    @PostMapping(value = "/upload")
+    public ResponseEntity<Void> createUpload(@RequestParam(value = "file", required = false) MultipartFile file,
+                                             @RequestPart("job") Job job) {
+        if (file != null) {
+            String fileName = file.getOriginalFilename();
+            try {
+                FileCopyUtils.copy(file.getBytes(), new File(linkCv + fileName));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            job.setUploadCV(displayLink1 + fileName);
+        } else {
+            job.setUploadCV(displayLink1 + "cv.jpg");
+        }
+        jobService.save(job);
+        return new ResponseEntity<>(HttpStatus.OK);}
+//        if (file != null) {
+//            try {
+//                byte[] bytes = file.getBytes();
+//                Path path = Paths.get("/uploads" + file.getOriginalFilename());
+//                Files.write(path, bytes);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//            job.setUploadCV(displayLink1 + file);
+//        }else {
+//            job.setUploadCV(displayLink1 + "cv.jpg");
+//        }
+//        jobService.save(job);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }
